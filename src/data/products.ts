@@ -180,28 +180,6 @@ export const PRODUCTS: Product[] = [
       'Acabado pulido de alta duración',
     ],
   },
-  {
-    id: 'eslabones-de-color',
-    numericId: 8,
-    name: 'Eslabones de color',
-    category: 'pulseras',
-    categoryLabel: 'Pulseras',
-    price: 60,
-    badge: 'EXCLUSIVO',
-    subtitle: 'Pulseras · Enchapado en Oro 18k PVD',
-    specification: 'Eslabones dorados con color',
-    description:
-      'Cadena de eslabones dorados realzados con detalles de color sofisticados. Acero inoxidable 316L · Enchapado en Oro 18k PVD.',
-    image: '/assets/products/eslabones_de_color.jpg',
-    cloudinaryUrl: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1792168843/7.jpg',
-    insetDetail: '/assets/products/eslabones_de_color.jpg',
-    features: [
-      'Acero inoxidable 316L · Enchapado en Oro 18k PVD',
-      '100% waterproof: no se despinta ni oxida',
-      'Hipoalergénica, apta para pieles sensibles',
-      'Diseño moderno y versátil',
-    ],
-  },
 
   // ─── ARETES (4) ──────────────────────────────────────────────────────────
   {
