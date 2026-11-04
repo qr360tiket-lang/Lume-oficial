@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, Cambria, serif;
+  --font-sans: "Jost", system-ui, -apple-system, sans-serif;
+  --color-warm-bg: #FAF3E9;
+  --color-warm-card: #F3E9DA;
+  --color-warm-border: #E6D8BF;
+  --color-pialu-brown: #4A3820;
+  --color-pialu-gold: #B8935A;
+  --color-pialu-muted: #8A7A66;
+  --color-pialu-pink: #E0206F;
+}
+
+:root {
+  --bg: #FAF3E9;
+  --bg2: #F3E9DA;
+  --brown: #4A3820;
+  --gold: #B8935A;
+  --line: #E6D8BF;
+  --mut: #8A7A66;
+  --wa: #25D366;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--brown);
+  font-family: 'Jost', system-ui, sans-serif;
+  font-weight: 300;
+}
+
+h1, h2, h3, .serif {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF3E9;
+}
+::-webkit-scrollbar-thumb {
+  background: #E6D8BF;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #CDBBA0;
+}
+
+/* Marquee infinite scroll */
+@keyframes mv {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: mv 42s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Floating animation for decorative sparkle */
+@keyframes fl {
+  50% {
+    transform: translateY(-20px) rotate(12deg);
+  }
+}
+
+.animate-float {
+  animation: fl 8s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes cardUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slideLeft {
+  animation: slideLeft 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.animate-cardUp {
+  animation: cardUp 0.6s forwards;
+}
+
+/* Hide scrollbar */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
