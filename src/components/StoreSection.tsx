@@ -159,7 +159,9 @@ export const StoreSection: React.FC<StoreSectionProps> = ({
                 <img
                   src={p.image}
                   alt={p.name}
-                  className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"
+                  className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-104 ${
+                    p.images && p.images.length > 1 ? 'group-hover:opacity-0 transition-opacity duration-500' : ''
+                  }`}
                   loading="lazy"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
@@ -168,6 +170,23 @@ export const StoreSection: React.FC<StoreSectionProps> = ({
                     }
                   }}
                 />
+
+                {/* Second image on hover if available */}
+                {p.images && p.images.length > 1 && (
+                  <img
+                    src={p.images[1]}
+                    alt={`${p.name} detalle`}
+                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-104"
+                    loading="lazy"
+                  />
+                )}
+
+                {/* Multiple images indicator */}
+                {p.images && p.images.length > 1 && (
+                  <span className="absolute bottom-3 right-3 z-20 bg-[#FAF3E9]/90 backdrop-blur-xs text-[#4A3820] text-[9px] font-sans font-medium px-2 py-0.5 rounded-full border border-[#E6D8BF] shadow-xs">
+                    2 fotos
+                  </span>
+                )}
               </div>
 
               {/* Title & Price Row (.row in template) */}

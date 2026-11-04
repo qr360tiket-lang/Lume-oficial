@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Minus, Plus, Check } from 'lucide-react';
+import { Minus, Plus, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Product } from '../data/products';
 
 interface ProductModalProps {
@@ -15,10 +15,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
 }) => {
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
     setQuantity(1);
     setAdded(false);
+    setActiveImageIndex(0);
   }, [product]);
 
   useEffect(() => {
@@ -30,6 +32,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   }, [onClose]);
 
   if (!product) return null;
+
+  const imageList = product.images && product.images.length > 0 ? product.images : [product.image];
+  const currentImg = imageList[activeImageIndex] || product.image;
 
   const handleDecrease = () => {
     if (quantity > 1) setQuantity((q) => q - 1);
@@ -45,6 +50,14 @@ export const ProductModal: React.FC<ProductModalProps> = ({
     setTimeout(() => {
       setAdded(false);
     }, 1500);
+  };
+
+  const handlePrevImage = () => {
+    setActiveImageIndex((prev) => (prev - 1 + imageList.length) % imageList.length);
+  };
+
+  const handleNextImage = () => {
+    setActiveImageIndex((prev) => (prev + 1) % imageList.length);
   };
 
   return (
@@ -69,12 +82,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({
         </button>
 
         {/* Left: Product Image (.mimg in template) */}
-        <div className="bg-gradient-to-br from-[#FFF9EF] to-[#EBDDC6] flex items-center justify-center p-8 sm:p-12 relative min-h-[300px]">
-          <div className="relative w-full max-w-[380px] aspect-square rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-gradient-to-br from-[#FFF9EF] to-[#EBDDC6] flex flex-col items-center justify-center p-6 sm:p-10 relative min-h-[300px]">
+          <div className="relative w-full max-w-[380px] aspect-square rounded-2xl overflow-hidden shadow-sm border border-[#E6D8BF]/60 bg-white">
             <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-cover"
+              src={currentImg}
+              alt={`${product.name} - Foto ${activeImageIndex + 1}`}
+              className="w-full h-full object-cover transition-all duration-300"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 if (target.src !== product.cloudinaryUrl) {
@@ -82,7 +95,51 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                 }
               }}
             />
+
+            {/* Prev/Next arrows if multiple images */}
+            {imageList.length > 1 && (
+              <>
+                <button
+                  onClick={handlePrevImage}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-[#FAF3E9]/90 text-[#4A3820] hover:bg-[#4A3820] hover:text-white transition-all flex items-center justify-center shadow-md cursor-pointer backdrop-blur-xs"
+                  aria-label="Foto anterior"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={handleNextImage}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-[#FAF3E9]/90 text-[#4A3820] hover:bg-[#4A3820] hover:text-white transition-all flex items-center justify-center shadow-md cursor-pointer backdrop-blur-xs"
+                  aria-label="Foto siguiente"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </>
+            )}
           </div>
+
+          {/* Thumbnails row if multiple photos */}
+          {imageList.length > 1 && (
+            <div className="flex items-center gap-2.5 mt-4">
+              {imageList.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveImageIndex(idx)}
+                  className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                    activeImageIndex === idx
+                      ? 'border-[#B8935A] shadow-md scale-105'
+                      : 'border-[#E6D8BF] opacity-70 hover:opacity-100'
+                  }`}
+                  aria-label={`Ver foto ${idx + 1}`}
+                >
+                  <img
+                    src={img}
+                    alt={`Miniatura ${idx + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Right: Product Info (.minfo in template) */}

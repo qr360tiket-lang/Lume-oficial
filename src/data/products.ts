@@ -10,6 +10,7 @@ export interface Product {
   specification: string;
   description: string;
   image: string;
+  images?: string[];
   cloudinaryUrl: string;
   insetDetail: string;
   features: string[];
@@ -241,6 +242,10 @@ export const PRODUCTS: Product[] = [
     description:
       'Set de 3 pares de aretes minimalistas perfectos para múltiples perforaciones. Precio del pack S/ 65 (c/u S/ 25). Medidas: 0.38 cm · 0.6 cm · 1.01 cm. Acero inoxidable 316L · Enchapado en Oro 18k PVD.',
     image: '/assets/products/pack_aretes_petite.png',
+    images: [
+      '/assets/products/pack_aretes_petite.png',
+      '/assets/products/pack_aretes_petite_2.png',
+    ],
     cloudinaryUrl:
       'https://res.cloudinary.com/pdwsqs4f/image/upload/v1792030578/Tres_pares_de_aretes_dorados_elegantes.png',
     insetDetail: '/assets/products/pack_aretes_petite.png',
