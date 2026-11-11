@@ -36,6 +36,11 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   const imageList = product.images && product.images.length > 0 ? product.images : [product.image];
   const currentImg = imageList[activeImageIndex] || product.image;
 
+  // Clean specification to prevent "Medida: medida:" duplication
+  const cleanSpec = product.specification
+    ? product.specification.replace(/^medida:\s*/i, '').trim()
+    : '';
+
   const handleDecrease = () => {
     if (quantity > 1) setQuantity((q) => q - 1);
   };
@@ -64,26 +69,26 @@ export const ProductModal: React.FC<ProductModalProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[rgba(60,45,28,0.55)] backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[rgba(60,45,28,0.6)] backdrop-blur-xs animate-fadeIn overflow-y-auto"
       onClick={onClose}
     >
-      {/* Modal Dialog Card (.modal in template) */}
+      {/* Modal Dialog Card: optimized to fit 100% in a single screen on mobile & desktop */}
       <div
-        className="relative bg-[#FAF3E9] rounded-[32px] w-full max-w-[1040px] max-h-[92vh] overflow-y-auto grid grid-cols-1 md:grid-cols-2 shadow-2xl border border-[#E6D8BF]"
+        className="relative bg-[#FAF3E9] rounded-2xl sm:rounded-3xl w-full max-w-[420px] md:max-w-[820px] max-h-[92vh] flex flex-col md:grid md:grid-cols-12 shadow-2xl border border-[#E6D8BF] overflow-hidden my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button (.x in template) */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 sm:top-5 sm:right-5 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-[#E6D8BF] bg-[#FAF3E9] text-xl flex items-center justify-center text-[#4A3820] hover:rotate-90 hover:border-[#B8935A] transition-all duration-300 cursor-pointer"
+          className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-30 w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-[#E6D8BF] bg-[#FAF3E9]/95 text-lg sm:text-xl flex items-center justify-center text-[#4A3820] hover:rotate-90 hover:border-[#B8935A] hover:bg-white transition-all duration-300 cursor-pointer shadow-xs"
           aria-label="Cerrar"
         >
           ×
         </button>
 
-        {/* Left: Product Image (.mimg in template) */}
-        <div className="bg-gradient-to-br from-[#FFF9EF] to-[#EBDDC6] flex flex-col items-center justify-center p-6 sm:p-10 relative min-h-[300px]">
-          <div className="relative w-full max-w-[380px] aspect-square rounded-2xl overflow-hidden shadow-sm border border-[#E6D8BF]/60 bg-white">
+        {/* Top/Left: Product Image */}
+        <div className="md:col-span-5 bg-gradient-to-br from-[#FFF9EF] to-[#EBDDC6] flex flex-col items-center justify-center p-3 sm:p-4 md:p-6 relative border-b md:border-b-0 md:border-r border-[#E6D8BF]/60 shrink-0">
+          <div className="relative w-full max-w-[150px] sm:max-w-[200px] md:max-w-[280px] aspect-square rounded-xl sm:rounded-2xl overflow-hidden shadow-xs border border-[#E6D8BF]/70 bg-white">
             <img
               src={currentImg}
               alt={`${product.name} - Foto ${activeImageIndex + 1}`}
@@ -101,33 +106,33 @@ export const ProductModal: React.FC<ProductModalProps> = ({
               <>
                 <button
                   onClick={handlePrevImage}
-                  className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-[#FAF3E9]/90 text-[#4A3820] hover:bg-[#4A3820] hover:text-white transition-all flex items-center justify-center shadow-md cursor-pointer backdrop-blur-xs"
+                  className="absolute left-1.5 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-[#FAF3E9]/90 text-[#4A3820] hover:bg-[#4A3820] hover:text-white transition-all flex items-center justify-center shadow-md cursor-pointer"
                   aria-label="Foto anterior"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={handleNextImage}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-[#FAF3E9]/90 text-[#4A3820] hover:bg-[#4A3820] hover:text-white transition-all flex items-center justify-center shadow-md cursor-pointer backdrop-blur-xs"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-[#FAF3E9]/90 text-[#4A3820] hover:bg-[#4A3820] hover:text-white transition-all flex items-center justify-center shadow-md cursor-pointer"
                   aria-label="Foto siguiente"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </>
             )}
           </div>
 
-          {/* Thumbnails row if multiple photos */}
+          {/* Interactive mini-thumbnails if multiple photos */}
           {imageList.length > 1 && (
-            <div className="flex items-center gap-2.5 mt-4">
+            <div className="flex items-center gap-2 mt-2">
               {imageList.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
-                  className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                  className={`relative w-8 h-8 rounded-md overflow-hidden border transition-all cursor-pointer ${
                     activeImageIndex === idx
-                      ? 'border-[#B8935A] shadow-md scale-105'
-                      : 'border-[#E6D8BF] opacity-70 hover:opacity-100'
+                      ? 'border-[#B8935A] ring-1 ring-[#B8935A] scale-105'
+                      : 'border-[#E6D8BF] opacity-60 hover:opacity-100'
                   }`}
                   aria-label={`Ver foto ${idx + 1}`}
                 >
@@ -138,74 +143,83 @@ export const ProductModal: React.FC<ProductModalProps> = ({
                   />
                 </button>
               ))}
+              <span className="text-[10px] text-[#8A7A66] font-sans font-medium ml-1">
+                {activeImageIndex === 1 ? '✦ Puesto en oreja' : '✦ Joya'}
+              </span>
             </div>
           )}
         </div>
 
-        {/* Right: Product Info (.minfo in template) */}
-        <div className="p-7 sm:p-12 flex flex-col justify-center">
-          {/* Eyebrow (.eyebrow) */}
-          <div className="text-[11px] tracking-[0.35em] uppercase text-[#B8935A] font-medium font-sans mb-1">
-            {product.categoryLabel.toUpperCase().split('').join(' ')}
+        {/* Bottom/Right: Product Info */}
+        <div className="md:col-span-7 p-3.5 sm:p-5 md:p-7 flex flex-col justify-between overflow-y-auto">
+          <div>
+            {/* Eyebrow (.eyebrow) */}
+            <div className="text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-[#B8935A] font-semibold font-sans">
+              {product.categoryLabel.toUpperCase().split('').join(' ')}
+            </div>
+
+            {/* Title */}
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl text-[#4A3820] font-normal leading-tight mt-0.5 mb-1">
+              {product.name}
+            </h2>
+
+            {/* Price */}
+            <div className="font-serif text-lg sm:text-xl md:text-2xl text-[#B8935A] font-medium mb-1.5 sm:mb-2 tabular-nums">
+              S/ {product.price}
+            </div>
+
+            {/* Description */}
+            <p className="text-[12px] sm:text-[13px] text-[#7A6A56] leading-[1.5] mb-2 sm:mb-3 font-sans line-clamp-2 sm:line-clamp-3">
+              {product.description}
+            </p>
+
+            {/* Highlights list */}
+            <div className="space-y-1 sm:space-y-1.5 mb-3 sm:mb-4 text-[11px] sm:text-[12px] text-[#4A3820] font-sans">
+              {cleanSpec && (
+                <div className="flex items-center gap-2">
+                  <span className="text-[#B8935A] text-xs">✦</span>
+                  <span className="font-medium text-[#4A3820]">Medida: <span className="font-normal text-[#6B5A45]">{cleanSpec}</span></span>
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <span className="text-[#B8935A] text-xs">✦</span>
+                <span className="text-[#6B5A45]">Acero 316L · Enchapado Oro 18k PVD</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[#B8935A] text-xs">✦</span>
+                <span className="text-[#6B5A45]">100% Waterproof & Hipoalergénico</span>
+              </div>
+            </div>
           </div>
 
-          {/* Title (h2: 42px in Playfair Display) */}
-          <h2 className="font-serif text-3xl sm:text-[42px] text-[#4A3820] font-normal leading-[1.1] my-2">
-            {product.name}
-          </h2>
-
-          {/* Price (.p in template: Playfair Display, var(--gold), 28px) */}
-          <div className="font-serif text-2xl sm:text-[28px] text-[#B8935A] font-normal mb-3 tabular-nums">
-            S/ {product.price}
-          </div>
-
-          {/* Description (.d in template) */}
-          <p className="text-sm sm:text-[15px] text-[#8A7A66] leading-[1.8] my-3 font-light font-sans">
-            {product.description}
-          </p>
-
-          {/* Features list (ul/li with ✦ in template) */}
-          <ul className="space-y-2 mb-7 text-sm sm:text-[15px] text-[#4A3820] font-sans">
-            <li className="flex items-start gap-2.5">
-              <span className="text-[#B8935A] text-xs pt-1">✦</span>
-              <span>Medida: {product.specification.toLowerCase()}</span>
-            </li>
-            {product.features.slice(1).map((f, idx) => (
-              <li key={idx} className="flex items-start gap-2.5">
-                <span className="text-[#B8935A] text-xs pt-1">✦</span>
-                <span className="leading-snug">{f}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* Buy Row (.buy in template) */}
-          <div className="flex gap-4 items-center pt-2">
-            {/* Quantity (.qty in template) */}
-            <div className="flex items-center gap-3.5 border border-[#E6D8BF] rounded-full px-4 py-2.5 bg-[#FAF3E9]">
+          {/* Buy Row */}
+          <div className="flex gap-2 sm:gap-3 items-center pt-2 border-t border-[#E6D8BF]/60 mt-auto">
+            {/* Quantity */}
+            <div className="flex items-center gap-2 sm:gap-3 border border-[#E6D8BF] rounded-full px-2.5 sm:px-3.5 py-1.5 bg-[#FAF9F7] shrink-0">
               <button
                 onClick={handleDecrease}
                 disabled={quantity <= 1}
-                className="text-lg text-[#B8935A] hover:text-[#4A3820] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                className="text-base text-[#B8935A] hover:text-[#4A3820] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer w-5 h-5 flex items-center justify-center"
                 aria-label="Disminuir"
               >
-                <Minus className="w-4 h-4" />
+                <Minus className="w-3.5 h-3.5" />
               </button>
-              <span className="font-serif text-base tabular-nums w-4 text-center select-none text-[#4A3820]">
+              <span className="font-serif text-sm sm:text-base tabular-nums w-4 text-center select-none text-[#4A3820] font-medium">
                 {quantity}
               </span>
               <button
                 onClick={handleIncrease}
-                className="text-lg text-[#B8935A] hover:text-[#4A3820] cursor-pointer"
+                className="text-base text-[#B8935A] hover:text-[#4A3820] cursor-pointer w-5 h-5 flex items-center justify-center"
                 aria-label="Aumentar"
               >
-                <Plus className="w-4 h-4" />
+                <Plus className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            {/* Add button (.add in template: height 64px, uppercase, letter-spacing .3em) */}
+            {/* Add button */}
             <button
               onClick={handleAdd}
-              className={`flex-1 h-[54px] sm:h-[64px] rounded-full text-xs sm:text-[13px] tracking-[0.3em] uppercase font-sans font-medium transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer ${
+              className={`flex-1 h-[42px] sm:h-[46px] md:h-[50px] rounded-full text-[11px] sm:text-xs tracking-[0.22em] uppercase font-sans font-semibold transition-all shadow-md active:scale-98 flex items-center justify-center gap-1.5 cursor-pointer ${
                 added
                   ? 'bg-[#25D366] text-white'
                   : 'bg-[#4A3820] hover:bg-[#B8935A] text-[#FAF3E9]'
@@ -226,3 +240,4 @@ export const ProductModal: React.FC<ProductModalProps> = ({
     </div>
   );
 };
+

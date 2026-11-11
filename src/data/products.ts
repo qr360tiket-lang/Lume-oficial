@@ -241,9 +241,13 @@ export const PRODUCTS: Product[] = [
     specification: 'Medida: 0.38 cm (par)',
     description:
       'Arete Petite solitario con circonita brillante en engaste redondo pulido. Medida: 0.38 cm. Acero inoxidable 316L · Enchapado en Oro 18k PVD.',
-    image: '/assets/products/aretes_petite_2.png',
+    image: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413879/2.png',
+    images: [
+      'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413879/2.png',
+      'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794414899/Dise%C3%B1o_sin_t%C3%ADtulo.png',
+    ],
     cloudinaryUrl: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413879/2.png',
-    insetDetail: '/assets/products/aretes_petite_2.png',
+    insetDetail: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413879/2.png',
     features: [
       'Medida: 0.38 cm',
       'Acero inoxidable 316L · Enchapado en Oro 18k PVD',
@@ -263,9 +267,13 @@ export const PRODUCTS: Product[] = [
     specification: 'Medida: 0.60 cm (par)',
     description:
       'Arete Petite diseño floral con microesferas doradas y centro de circonita radiante. Medida: 0.60 cm. Acero inoxidable 316L · Enchapado en Oro 18k PVD.',
-    image: '/assets/products/aretes_petite_1.png',
+    image: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413890/1.png',
+    images: [
+      'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413890/1.png',
+      'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794414899/Dise%C3%B1o_sin_t%C3%ADtulo.png',
+    ],
     cloudinaryUrl: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413890/1.png',
-    insetDetail: '/assets/products/aretes_petite_1.png',
+    insetDetail: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413890/1.png',
     features: [
       'Medida: 0.60 cm',
       'Acero inoxidable 316L · Enchapado en Oro 18k PVD',
@@ -285,9 +293,13 @@ export const PRODUCTS: Product[] = [
     specification: 'Medida: 1.01 cm (par)',
     description:
       'Arete Petite diseño trío marquesa de tres cristales resplandecientes. Medida: 1.01 cm. Acero inoxidable 316L · Enchapado en Oro 18k PVD.',
-    image: '/assets/products/aretes_petite_3.png',
+    image: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413885/3.png',
+    images: [
+      'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413885/3.png',
+      'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794414899/Dise%C3%B1o_sin_t%C3%ADtulo.png',
+    ],
     cloudinaryUrl: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413885/3.png',
-    insetDetail: '/assets/products/aretes_petite_3.png',
+    insetDetail: 'https://res.cloudinary.com/pdwsqs4f/image/upload/v1794413885/3.png',
     features: [
       'Medida: 1.01 cm',
       'Acero inoxidable 316L · Enchapado en Oro 18k PVD',
